@@ -437,91 +437,91 @@ func TestCustomValidationParameter(t *testing.T) {
 	}
 }
 
-// func TestOrRule(t *testing.T) {
-// 	type Login struct {
-// 		Username string `validate:"required,email|numeric"`
-// 		Password string `validate:"required"`
-// 	}
+func TestOrRule(t *testing.T) {
+	type Login struct {
+		Username string `validate:"required,email|numeric"`
+		Password string `validate:"required"`
+	}
 
-// 	request := Login{
-// 		Username: "12345",
-// 		Password: "ekoo",
-// 	}
+	request := Login{
+		Username: "sdfsfsd",
+		Password: "ekoo",
+	}
 
-// 	validate := validator.New()
-// 	err := validate.Struct(request)
-// 	if err != nil {
-// 		fmt.Println(err.Error())
-// 	}
-// }
+	validate := validator.New()
+	err := validate.Struct(request)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+}
 
-// func MustEqualsIgnoreCase(field validator.FieldLevel) bool {
-// 	value, _, _, ok := field.GetStructFieldOK2()
-// 	if !ok {
-// 		panic("field not ok")
-// 	}
+func MustEqualsIgnoreCase(field validator.FieldLevel) bool {
+	value, _, _, ok := field.GetStructFieldOK2()
+	if !ok {
+		panic("field not ok")
+	}
 
-// 	firstValue := strings.ToUpper(field.Field().String())
-// 	secondValue := strings.ToUpper(value.String())
+	firstValue := strings.ToUpper(field.Field().String())
+	secondValue := strings.ToUpper(value.String())
 
-// 	return firstValue == secondValue
-// }
+	return firstValue == secondValue
+}
 
-// func TestCrossFieldValidation(t *testing.T) {
-// 	validate := validator.New()
-// 	validate.RegisterValidation("field_equals_ignore_case", MustEqualsIgnoreCase)
+func TestCrossFieldValidation(t *testing.T) {
+	validate := validator.New()
+	validate.RegisterValidation("field_equals_ignore_case", MustEqualsIgnoreCase)
 
-// 	type User struct {
-// 		Username string `validate:"required,field_equals_ignore_case=Email|field_equals_ignore_case=Phone"`
-// 		Email    string `validate:"required,email"`
-// 		Phone    string `validate:"required,numeric"`
-// 		Name     string `validate:"required"`
-// 	}
+	type User struct {
+		Username string `validate:"required,field_equals_ignore_case=Email|field_equals_ignore_case=Phone"`
+		Email    string `validate:"required,email"`
+		Phone    string `validate:"required,numeric"`
+		Name     string `validate:"required"`
+	}
 
-// 	user := User{
-// 		Username: "eko@example.com",
-// 		Email:    "eko@example.com",
-// 		Phone:    "089999999999",
-// 		Name:     "Eko",
-// 	}
+	user := User{
+		Username: "eko@example.com",
+		Email:    "eko@example.com",
+		Phone:    "089999999999",
+		Name:     "Eko",
+	}
 
-// 	err := validate.Struct(user)
-// 	if err != nil {
-// 		fmt.Println(err)
-// 	}
-// }
+	err := validate.Struct(user)
+	if err != nil {
+		fmt.Println(err)
+	}
+}
 
-// type RegisterRequest struct {
-// 	Username string `validate:"required"`
-// 	Email    string `validate:"required,email"`
-// 	Phone    string `validate:"required,numeric"`
-// 	Password string `validate:"required"`
-// }
+type RegisterRequest struct {
+	Username string `validate:"required"`
+	Email    string `validate:"required,email"`
+	Phone    string `validate:"required,numeric"`
+	Password string `validate:"required"`
+}
 
-// func MustValidRegisterSuccess(level validator.StructLevel) {
-// 	registerRequest := level.Current().Interface().(RegisterRequest)
+func MustValidRegisterSuccess(level validator.StructLevel) {
+	registerRequest := level.Current().Interface().(RegisterRequest)
 
-// 	if registerRequest.Username == registerRequest.Email || registerRequest.Username == registerRequest.Phone {
-// 		// sukses
-// 	} else {
-// 		// gagal
-// 		level.ReportError(registerRequest.Username, "Username", "Username", "username", "")
-// 	}
-// }
+	if registerRequest.Username == registerRequest.Email || registerRequest.Username == registerRequest.Phone {
+		// sukses
+	} else {
+		// gagal
+		level.ReportError(registerRequest.Username, "Username", "Username", "username", "")
+	}
+}
 
-// func TestStructLevelValidation(t *testing.T) {
-// 	validate := validator.New()
-// 	validate.RegisterStructValidation(MustValidRegisterSuccess, RegisterRequest{})
+func TestStructLevelValidation(t *testing.T) {
+	validate := validator.New()
+	validate.RegisterStructValidation(MustValidRegisterSuccess, RegisterRequest{})
 
-// 	request := RegisterRequest{
-// 		Username: "089923942934",
-// 		Email:    "eko@example.com",
-// 		Phone:    "089923942934",
-// 		Password: "rahasia",
-// 	}
+	request := RegisterRequest{
+		Username: "089923942934",
+		Email:    "eko@example.com",
+		Phone:    "089923942934",
+		Password: "rahasia",
+	}
 
-// 	err := validate.Struct(request)
-// 	if err != nil {
-// 		fmt.Println(err.Error())
-// 	}
-// }
+	err := validate.Struct(request)
+	if err != nil {
+		fmt.Println(err.Error())
+	}
+}
